@@ -1,0 +1,1 @@
+web: gunicorn d5_site.wsgi --log-file -

@@ -1,0 +1,21 @@
+{% extends "base_templ.html" %}
+
+{% block title %}<title>Домашняя библиотека|Авторы</title>{% endblock %}
+
+{% block content %}
+  <h1 style="text-align: center;">Список авторов</h1>
+  <div>
+    <ul  class="list-group">
+      {% for author in authors %}
+        <li class="list-group-item">{{ author.full_name }} - {{ author.birth_year }}</li>
+          <ul>
+            {% for book in books %}
+              {% ifequal  book.author.full_name author.full_name %}
+                <li>{{ book.title }}</li>
+              {% endifequal %}
+            {% endfor %}
+          </ul>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}

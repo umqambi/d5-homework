@@ -1,0 +1,52 @@
+{% extends "base_templ.html" %}
+
+{% block title %}<title>Домашняя библиотека|Книги</title>{% endblock %}
+
+{% block content %}
+<h1>Список всех {{ books|length }} книг</h1>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Index</td>
+                <td>Название книги</td>
+                <td>ISBN</td>
+                <td>Издательство</td>
+                <td>Описание</td>
+                <td>Год издания</td>
+                <td>Автор</td>
+                <td>Страна</td>
+                {% comment %}<td></td>{% endcomment %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ book.title }}</td>
+                <td>{{ book.ISBN }}</td>
+                <td>{{ book.redaction }}</td>
+                <td>{{ book.description }}</td>
+                <td>{{ book.year_release }}</td>
+                <td>{{ book.author.full_name }}</td>
+                <td>{{ book.author.country }}</td>
+                {% comment %}
+                <td>
+                    <form action="/index/book_increment/" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{book.id}}" />
+                        <input type="submit" value="Увеличить кол-во" />
+                    </form>
+                    <form action="/index/book_decrement/" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{book.id}}" />
+                        <input type="submit" value="Уменьшить кол-во" />
+                    </form>
+                </td>
+                {% endcomment %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
